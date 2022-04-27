@@ -7,7 +7,6 @@ using System.Data;
 using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
@@ -16,8 +15,7 @@ using RealtyPortal.ExternalApi.Enums;
 using Newtonsoft.Json;
 using RealtyPortal.ExternalApi.Model;
 using RealtyPortal.ExternalApi.Model.DAL;
-using CBSProxy_ClientWS;
-using CBSProxy_TokenWS;
+using MongoDB.Driver;
 using System.Configuration;
 using RealtyPortal.ExternalApi.Services;
 
