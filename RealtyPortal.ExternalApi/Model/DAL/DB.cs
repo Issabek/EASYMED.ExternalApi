@@ -2,10 +2,10 @@
 
 namespace RealtyPortal.ExternalApi.Model.DAL
 {
-    public abstract class DB
+    public class MongoDBSettings
     {
-        public IConfiguration _config;
-        public abstract string connectionString { get; set; }
-        public abstract int connectionTimeOut { get; set; }
+        public string ConnectionURI { get; set; } = null!;
+        public string DatabaseName { get; set; } = null!;
+        public string CollectionName { get; set; } = null!;
     }
 }

@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RealtyPortal.ExternalApi.Model.DAL;
+using RealtyPortal.ExternalApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +40,8 @@ namespace RealtyPortal.ExternalApi
             });
 
             services.AddControllers();
+            services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDB"));
+            services.AddSingleton<MongoDBService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RealtyPortal.ExternalApi", Version = "v1" });
