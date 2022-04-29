@@ -1,3 +1,4 @@
+using EasyMED.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,14 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using RealtyPortal.ExternalApi.Model.DAL;
-using RealtyPortal.ExternalApi.Services;
+using EASYMED.ExternalApi.Model.DAL;
+using EASYMED.ExternalApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RealtyPortal.ExternalApi
+namespace EASYMED.ExternalApi
 {
     public class Startup
     {
@@ -28,23 +29,16 @@ namespace RealtyPortal.ExternalApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: "WebSockets",
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("https://localhost:44344",
-                                                          "https://otbasybank.kz",
-                                                          "https://10.10.15.10:5016");
-                                  });
-            });
+            
 
             services.AddControllers();
             services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDB"));
+            services.AddTransient(typeof(SmsService));
+
             services.AddSingleton<MongoDBService>();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RealtyPortal.ExternalApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EasyMED", Version = "v1" });
             });
         }
 
@@ -55,7 +49,7 @@ namespace RealtyPortal.ExternalApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RealtyPortal.ExternalApi v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EasyMED v1"));
             }
 
             app.UseHttpsRedirection();

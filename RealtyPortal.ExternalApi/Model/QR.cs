@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using RealtyPortal.ExternalApi.Enums;
+using EASYMED.ExternalApi.Enums;
 
-namespace RealtyPortal.ExternalApi.Model
+namespace EASYMED.ExternalApi.Model
 {
     public class qrBase
     {

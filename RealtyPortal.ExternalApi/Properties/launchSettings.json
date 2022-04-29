@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "RealtyPortal.ExternalApi": {
+    "EASYMED.ExternalApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["RealtyPortal.ExternalApi/RealtyPortal.ExternalApi.csproj", "RealtyPortal.ExternalApi/"]
-RUN dotnet restore "RealtyPortal.ExternalApi/RealtyPortal.ExternalApi.csproj"
+COPY ["EASYMED.ExternalApi/EASYMED.ExternalApi.csproj", "EASYMED.ExternalApi/"]
+RUN dotnet restore "EASYMED.ExternalApi/EASYMED.ExternalApi.csproj"
 COPY . .
-WORKDIR "/src/RealtyPortal.ExternalApi"
-RUN dotnet build "RealtyPortal.ExternalApi.csproj" -c Release -o /app/build
+WORKDIR "/src/EASYMED.ExternalApi"
+RUN dotnet build "EASYMED.ExternalApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "RealtyPortal.ExternalApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "EASYMED.ExternalApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "RealtyPortal.ExternalApi.dll"]
+ENTRYPOINT ["dotnet", "EASYMED.ExternalApi.dll"]

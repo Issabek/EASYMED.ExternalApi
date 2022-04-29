@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RealtyPortal.ExternalApi.Enums
+namespace EASYMED.ExternalApi.Enums
 {
     public enum AuthtenticationType
     {

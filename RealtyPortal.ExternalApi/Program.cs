@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RealtyPortal.ExternalApi
+namespace EASYMED.ExternalApi
 {
     public class Program
     {

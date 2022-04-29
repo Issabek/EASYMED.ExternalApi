@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using RealtyPortal.ExternalApi.Enums;
+using EASYMED.ExternalApi.Enums;
 using Newtonsoft.Json;
-using RealtyPortal.ExternalApi.Model;
+using EASYMED.ExternalApi.Model;
 using Microsoft.Extensions.Configuration;
-using RealtyPortal.ExternalApi.Services;
+using EASYMED.ExternalApi.Services;
 using System.Data;
 using System.Data.SqlClient;
 using MongoDB.Driver;
@@ -21,43 +21,99 @@ using System.Security.Cryptography;
 using System.Net;
 using MongoDB.Bson;
 
-namespace RealtyPortal.ExternalApi.Controllers
+namespace EASYMED.ExternalApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class QRSignController : ControllerBase
     {
+        private readonly MongoDBService _mongoDBService;
+
         private readonly IConfiguration _config;
-        //private string ConnectionString => _config.GetValue<string>("ConnectionStrings:SessionAuthConnectionString");
-        private string ConnectionString
-        {
-            get
-            {
-                return _config.GetValue<string>("ConnectionStrings:SessionAuthConnectionString");
-            }
-        }
-        private bool IsTest => _config.GetValue<bool>("IsTest");
         private readonly IHostingEnvironment _environment;
-        public static string token;
-        public MongoClient _dbClient;
-        private readonly ILog _logger = LogManager.GetLogger(typeof(QRSignController));
         public static Dictionary<Guid, string> statusList;
-        public QRSignController(IConfiguration config, IHostingEnvironment environment)
+        public QRSignController(IConfiguration config, IHostingEnvironment environment, MongoDBService mongoDBService)
         {
             _config = config;
             _environment = environment;
-            _dbClient= new MongoClient(ConnectionString);
+            _mongoDBService = mongoDBService;
         }
-        [Route("Applications/statuses")]
+        
+        [Route("QRReceipt/GetAllReceipts")]
         [HttpGet]
-        public async Task<List<BsonDocument>> GetMongoDBS()
+        public List<object> GetAllReceipts()
         {
+            var dbList = _mongoDBService;
+            //var dbList = _dbClient.ListDatabases().ToList();
 
-            var dbList = _dbClient.ListDatabases().ToList();
+            return new List<object>();
+        }        
+        
+        [Route("QRReceipt/GetReceiptByIIN")]
+        [HttpGet]
+        public List<object> GetReceiptByIIN(string iin)
+        {
+            var dbList = _mongoDBService;
+            //var dbList = _dbClient.ListDatabases().ToList();
+
+            return new List<object>();
+            
+        }          
+        [Route("QRReceipt/GetReceiptByPhone")]
+        [HttpGet]
+        public object GetReceiptByPhone(string phone)
+        {
+            var dbList = _mongoDBService;
+            //var dbList = _dbClient.ListDatabases().ToList();
 
             return dbList;
+        }        
+        
+        [Route("QRReceipt/GetAllPatients")]
+        [HttpGet]
+        public object GetAllPatients()
+        {
+            var dbList = _mongoDBService;
+            //var dbList = _dbClient.ListDatabases().ToList();
+
+            return new List<object>();
+        }
+        [Route("QRReceipt/GetDoctorPatientsByIIN")]
+        [HttpGet]
+        public List<object> GetDoctorPatientsByIIN(string iin)
+        {
+            var dbList = _mongoDBService;
+            return new List<object>();
+        }                
+        [Route("QRReceipt/GetPatientDoctorsByIIN")]
+        [HttpGet]
+        public List<object> GetPatientDoctorsByIIN(string iin)
+        {
+            var dbList = _mongoDBService;
+            //var dbList = _dbClient.ListDatabases().ToList();
+
+            return new List<object>();
         }
 
+        [Route("QRReceipt/CreateEmptyReceiptQR")]
+        [HttpPost]
+        public object CreateEmptyReceiptQR(string doctorIIN, string patientIIN)
+        {
+            var dbList = _mongoDBService;
+            //var dbList = _dbClient.ListDatabases().ToList();
+
+            return dbList;
+        }        
+        [Route("QRReceipt/EditReceiptById")]
+        [HttpPut]
+        public bool EditReceipt(object receiptid)
+        {
+            var dbList = _mongoDBService;
+            //var dbList = _dbClient.ListDatabases().ToList();
+
+            return false;
+        }   
+   
 
         //    [Route("Applications/{type}/{applicationGuid}/colvirAppNum")]
         //    [HttpGet]

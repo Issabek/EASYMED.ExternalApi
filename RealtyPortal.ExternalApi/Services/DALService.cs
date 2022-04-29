@@ -1,25 +1,56 @@
-﻿using Microsoft.Extensions.Options;
+﻿using EasyMED.Model;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using RealtyPortal.ExternalApi.Model.DAL;
+using EASYMED.ExternalApi.Model.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RealtyPortal.ExternalApi.Services
+namespace EASYMED.ExternalApi.Services
 {
     public class MongoDBService
     {
-        private readonly IMongoCollection<object> _playlistCollection;
+
+    //"DoctorCollectionName": "Doctor",
+    //"ReceiptCollectionName": "Receipt",
+    //"PatientCollectionName": "Patient",
+    //"QRCollectionName": "QR",
+    //"MedicamentsCollectionName": "Medicaments",
+    //"SMSCollectionName": "TFAAuth"
+
+
+        private readonly IMongoCollection<TFAAuth> _SMSCollection;
         public MongoDBService(IOptions<MongoDBSettings> mongoDBSettings)
         {
             MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionURI);
             IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
-            _playlistCollection = database.GetCollection<object>(mongoDBSettings.Value.CollectionName);
+            _SMSCollection = database.GetCollection<TFAAuth>(mongoDBSettings.Value.SMSCollection);
+          }
+
+        public async Task<bool> SaveOTP(TFAAuth sms)
+        {
+            try
+            {
+                 await _SMSCollection.FindOneAndDeleteAsync(sms.PhoneNumber);
+                 await _SMSCollection.InsertOneAsync(sms);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
-        public async Task<List<string>> GetAsync() { return null; }
-        public async Task CreateAsync(object playlist) { }
-        public async Task AddToPlaylistAsync(string id, string movieId) { }
-        public async Task DeleteAsync(string id) { }
+        public async Task<TFAAuth> GetOTP(string phone) 
+        {
+            var result = (await _SMSCollection.Find(f => f.PhoneNumber == phone)?.FirstOrDefaultAsync());
+            if (result != null)
+            {
+                await _SMSCollection.FindOneAndDeleteAsync(phone);
+                return result;
+            }
+
+            return null;
+        }
     }
 }

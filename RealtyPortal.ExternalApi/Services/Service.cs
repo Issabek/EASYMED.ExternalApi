@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using System.Xml;
 
-using RealtyPortal.ExternalApi.Model;
+using EASYMED.ExternalApi.Model;
 
-namespace RealtyPortal.ExternalApi.Services
+namespace EASYMED.ExternalApi.Services
 {
     public class X509
     {
