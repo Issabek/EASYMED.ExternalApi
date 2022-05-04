@@ -79,7 +79,6 @@ namespace EasyMED.Services
                 var result = await _client.GetAsync(request);
                 if (result.Content==null || !result.Content.Contains("\"code\":0,\""))
                     throw new InvalidProgramException();
-                var resT = result;
            
         }  
         
