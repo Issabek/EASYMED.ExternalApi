@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="docker-compose.debug.yml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="docker-compose.debug.yml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="itext7" Version="7.2.2" />
     <PackageReference Include="itext7.pdfhtml" Version="4.0.2" />
